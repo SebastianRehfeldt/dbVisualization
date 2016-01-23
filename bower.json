@@ -1,0 +1,14 @@
+{
+  "name": "angular-seed",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/angular/angular-seed",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "foundation": "~5.5.1",
+    "angular-foundation": "~0.6.0",
+    "highcharts-ng": "~0.0.8"
+  }
+}
