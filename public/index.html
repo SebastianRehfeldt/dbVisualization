@@ -8,19 +8,70 @@
     <title>DB Visualization</title>
 
     <link rel="stylesheet" href="bower_components/foundation/css/foundation.min.css">
+    <link rel="stylesheet" href="app.css">
     
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular-foundation/mm-foundation-tpls.min.js"></script>
 
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.min.js"></script>
+
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script src="http://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
 
     <script src="app.js"></script>
 
+    <link rel="stylesheet" href="slider/slider.css">
+    <script src="slider/slider-min.js"></script>
+
 </head>
 <body ng-controller="mainController">
-    <h1>Hey</h1>
+    <div class="row">
+        <h1 class="headline">Movies actors and their side jobs</h1>
+        
+        <div id="container"></div>
 
+        <div id="buttonContainer">
+            <div class="columns small-4 small-offset-1 medium-offset-0 medium-2">
+                <a class="button dropdown" dropdown-toggle="#dropdown-example-1">{{selectedJob}}</a>
+                <ul id="dropdown-example-1" class="f-dropdown">
+                    <li ng-repeat="job in jobs">
+                        <a ng-click="selectJob(job)">{{job}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="columns small-4 small-offset-2 medium-offset-0 medium-2">
+                <a class="button dropdown" dropdown-toggle="#dropdown-example-2">{{selectedGender}}</a>
+                <ul id="dropdown-example-2" class="f-dropdown">
+                    <li ng-repeat="g in gender">
+                        <a ng-click="selectGender(g)">{{g}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="columns small-2 medium-1 medium-offset-1">
+                <h3 id="age-lable">Age:</h3>
+            </div>
+            <div class="columns small-10 medium-6">
+                <range-slider
+                  id="age-slider"
+                  class="radius"
+                  class="bzm-handle-display"
+                  callback="ageChanged"
+                  ng-model="age"
+                  start-at="minAge"
+                  stop-at="maxAge"
+                  dual-handles='true'
+                  initial="0,100"
+                  display-target='handle'
+                /></range-slider>
+            </div>
+        </div>
+
+
+    </div>
 </body>
 </html>
