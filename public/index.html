@@ -62,15 +62,14 @@
                   class="bzm-handle-display"
                   callback="ageChanged"
                   ng-model="age"
-                  start-at="minAge"
-                  stop-at="maxAge"
+                  not-less="minRange"
+                  not-more="maxRange"
                   dual-handles='true'
                   initial="0,100"
                   display-target='handle'
                 /></range-slider>
             </div>
         </div>
-
 
     </div>
 </body>

@@ -15,16 +15,27 @@ app.controller('mainController',function($scope, $http) {
         $scope.selectedGender = gender
     }
 
+    $scope.minRange = 0
+    $scope.maxRange = 100
+
     $scope.minAge = 0
     $scope.maxAge = 100
+
+
     $scope.ageChanged = function(age,slider){
-        console.log(slider.getValue(0))
-        console.log(slider.getValue(1))
-    }
+        $scope.minAge = slider.getValue(0)
+        $scope.maxAge = slider.getValue(1)
+    }   
 
-    $http.get('demoData.json').success(function(response) {
+    function loadData(){
+        var data = []
 
-        var data = response
+        for(var i =0;i< $scope.data.length; i++){
+            data.push({
+                "hc-key":$scope.data[i]["hc-key"],
+                "value" :$scope.data[i].total
+                })
+        }
 
         // Initiate the chart
         $('#container').highcharts('Map', {
@@ -48,18 +59,23 @@ app.controller('mainController',function($scope, $http) {
                 data : data,
                 mapData: Highcharts.maps['custom/world'],
                 joinBy: 'hc-key',
-                name: 'Random data',
+                name: 'Side Jobs',
                 states: {
                     hover: {
                         color: '#BADA55'
                     }
                 },
                 dataLabels: {
-                    enabled: true,
-                    format: '{point.name}'
+                    enabled: false
                 }
             }]
         })
+    }
 
-    })    
+
+    $http.get('demoData.json').success(function(response) {
+        $scope.data = response
+        loadData()
+    })
+ 
 })
