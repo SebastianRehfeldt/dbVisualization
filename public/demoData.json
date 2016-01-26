@@ -2,18 +2,22 @@
     {
         "hc-key": "us",
         "total":200,
+        "percentage": "50%",
         "value": [
             {"age":10,
              "total":100,
+             "percentage": "50%",
              "band":{
-                "total":50,
-                "male":25,
-                "female":25
+                "total":25,
+                "percentage": "50%",
+                "male":12,
+                "female":13
              },
              "author":{
-                "total":50,
-                "male":25,
-                "female":25
+                "total":25,
+                "percentage": "50%",
+                "male":12,
+                "female":13
              }
             },
             {"age":20,
