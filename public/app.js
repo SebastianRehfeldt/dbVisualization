@@ -125,6 +125,9 @@ app.controller('mainController',function($scope, $http) {
                 },
                 dataLabels: {
                     enabled: false
+                },
+                tooltip: {
+                    pointFormat: '{point.value} %'
                 }
             }]
         })
