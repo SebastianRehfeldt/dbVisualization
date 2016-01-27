@@ -35,71 +35,63 @@ app.controller('mainController',function($scope, $http) {
 
         for(var i =0;i< $scope.data.length; i++){
             //if there are no filters, just take the total value
-            if($scope.minAge === $scope.minRange && $scope.maxAge === $scope.maxRange && $scope.selectedGender === $scope.gender[0] && $scope.selectedJob === $scope.jobs[0]){
-                data.push({
-                "hc-key":$scope.data[i]["hc-key"],
-                "value" :$scope.data[i].total
-                })
-            }
-            //else loop over values inside country objects
-            else{
-                var count = 0
-								var country = $scope.data[i]["hc-key"]
-								var totalActorInCountry = $scope.data[i].total.female + $scope.data[i].total.male
-								var totalInput = 0
+            
+            var count = 0
+							var country = $scope.data[i]["hc-key"]
+							var totalActorInCountry = $scope.data[i].total.female + $scope.data[i].total.male
+							var totalInput = 0
 
-                for(var j=0;j<$scope.data[i].value.length;j++){
-                    //exit loop if maxAge is exceeded
-                    if($scope.data[i].value[j].age > $scope.maxAge){
-                        continue
+            for(var j=0;j<$scope.data[i].value.length;j++){
+                //exit loop if maxAge is exceeded
+                if($scope.data[i].value[j].age > $scope.maxAge){
+                    continue
+                }
+
+                //loop over age groups
+                if($scope.data[i].value[j].age >= $scope.minAge){
+
+											//add authors
+                    if($scope.selectedJob === $scope.jobs[0] || $scope.selectedJob === $scope.jobs[1]){
+                        // var overall = $scope.data[i].value[j].author.total
+                        // var pMale = 0;
+                        //add male authors
+                        if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[1]){
+                            // count += $scope.data[i].value[j].author.male
+															count += ( $scope.data[i].value[j].author.male / totalActorInCountry ) * 100
+															totalInput += $scope.data[i].value[j].author.male
+                        }
+                        //add female authors
+                        if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[2]){
+                            // count += $scope.data[i].value[j].author.female
+															count += ( $scope.data[i].value[j].author.female / totalActorInCountry ) * 100
+															totalInput += $scope.data[i].value[j].author.female
+                        }
                     }
 
-                    //loop over age groups
-                    if($scope.data[i].value[j].age >= $scope.minAge){
-
-												//add authors
-                        if($scope.selectedJob === $scope.jobs[0] || $scope.selectedJob === $scope.jobs[1]){
-                            // var overall = $scope.data[i].value[j].author.total
-                            // var pMale = 0;
-                            //add male authors
-                            if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[1]){
-                                // count += $scope.data[i].value[j].author.male
-																count += ( $scope.data[i].value[j].author.male / totalActorInCountry ) * 100
-																totalInput += $scope.data[i].value[j].author.male
-                            }
-                            //add female authors
-                            if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[2]){
-                                // count += $scope.data[i].value[j].author.female
-																count += ( $scope.data[i].value[j].author.female / totalActorInCountry ) * 100
-																totalInput += $scope.data[i].value[j].author.female
-                            }
+                    //add band members
+                    if($scope.selectedJob === $scope.jobs[0] || $scope.selectedJob === $scope.jobs[2]){
+                        //add male authors
+                        if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[1]){
+                            // count += $scope.data[i].value[j].band.male
+															count += ( $scope.data[i].value[j].band.male / totalActorInCountry ) * 100
+															totalInput += $scope.data[i].value[j].band.male
                         }
-
-                        //add band members
-                        if($scope.selectedJob === $scope.jobs[0] || $scope.selectedJob === $scope.jobs[2]){
-                            //add male authors
-                            if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[1]){
-                                // count += $scope.data[i].value[j].band.male
-																count += ( $scope.data[i].value[j].band.male / totalActorInCountry ) * 100
-																totalInput += $scope.data[i].value[j].band.male
-                            }
-                            //add female authors
-                            if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[2]){
-                                // count += $scope.data[i].value[j].band.female
-																count += ( $scope.data[i].value[j].band.female / totalActorInCountry ) * 100
-																totalInput += $scope.data[i].value[j].band.female
-                            }
+                        //add female authors
+                        if($scope.selectedGender === $scope.gender[0] || $scope.selectedGender === $scope.gender[2]){
+                            // count += $scope.data[i].value[j].band.female
+															count += ( $scope.data[i].value[j].band.female / totalActorInCountry ) * 100
+															totalInput += $scope.data[i].value[j].band.female
                         }
                     }
                 }
-								if(country == 'us')
-									console.log(totalActorInCountry, totalInput)
-
-                data.push({
-                "hc-key":$scope.data[i]["hc-key"],
-                "value" : count
-                })
             }
+							if(country == 'us')
+								console.log(totalActorInCountry, totalInput)
+
+            data.push({
+            "hc-key":$scope.data[i]["hc-key"],
+            "value" : count
+            })
 
         }
 
